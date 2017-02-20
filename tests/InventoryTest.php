@@ -5,29 +5,51 @@
     * @backupStaticAttributes disabled
     */
 
-    require_once "src/Task.php";
+    require_once "src/Inventory.php";
 
-    $server = 'mysql:host=localhost8889;dbname=to_do_test';
+    $server = 'mysql:host=localhost:8889;dbname=inventory_test';
     $username = 'root';
     $password = 'root';
     $DB = new PDO($server, $username, $password);
 
 
-    class TaskTest extends PHPUnit_Framework_TestCase
+    class InventoryTest extends PHPUnit_Framework_TestCase
     {
 
         function test_save()
         {
             //Arrange
-            $description = "Wash the dog";
-            $test_task = new Task($description);
+            $artist = "Picasso";
+            $artist2 = "Pollack";
+
+            $test_input = new Inventory($artist);
+            $test_input2 = new Inventory($artist2);
+
+            $test_input->save();
+            $test_input2->save();
+            //Act
+
+            $result = Inventory::getAll();
+            //Assert
+            $this->assertEquals([$test_input,$test_input2], $result);
+        }
+
+        function test_deleteAll()
+        {
+            //Arrange
+            $artist = "Picasso";
+            $artist2 = "Pollack";
+            $test_input = new Inventory($artist);
+            $test_input->save();
+            $test_input2 = new Inventory($artist2);
+            $test_input2->save();
 
             //Act
-            $test_task->save();
+            Inventory::deleteAll();
 
             //Assert
-            $result = Task::getAll();
-            $this->assertEquals($test_task, $result[0]);
+            $result = Inventory::getAll();
+            $this->assertEquals([], $result);
         }
     }
 ?>

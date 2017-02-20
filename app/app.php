@@ -1,11 +1,12 @@
 
 <?php
+    date_default_timezone_set('America/Los_Angeles');
     require_once __DIR__."/../vendor/autoload.php";
-    require_once __DIR__."/../src/Task.php";
+    require_once __DIR__."/../src/Inventory.php";
 
     $app = new Silex\Application();
 
-    $server = 'mysql:host=localhost8889;dbname=to_do';
+    $server = 'mysql:host=localhost:8889;dbname=inventory_test';
     $username = 'root';
     $password = 'root';
     $DB = new PDO($server, $username, $password);
